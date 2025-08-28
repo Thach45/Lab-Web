@@ -3,12 +3,62 @@ package org.example.demo.models;
 public class Product {
     private String id;
     private String name;
+    private String size;
+    private String description;
+    private String image_url;
     private double price;
+    private Boolean best_seller;
+    private int stock;
 
-    public Product(String id, String name, double price) {
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public Boolean getBest_seller() {
+        return best_seller;
+    }
+
+    public void setBest_seller(Boolean best_seller) {
+        this.best_seller = best_seller;
+    }
+
+    public Product(String id, String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.size = size;
+        this.description = description;
+        this.image_url = image_url;
+        this.best_seller = best_seller;
+        this.stock = stock;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getId() {
