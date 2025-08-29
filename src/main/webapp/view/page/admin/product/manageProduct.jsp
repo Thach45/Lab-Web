@@ -1,3 +1,4 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%--
   Created by IntelliJ IDEA.
   User: macpro
@@ -67,72 +68,39 @@
                     </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                    <!-- Mẫu sản phẩm 1 -->
-                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-left whitespace-nowrap">#1201</td>
+                    <c:forEach var="p" items="${products}" varStatus="status">
+                         <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">${status.index+1}</td>
                         <td class="py-3 px-6 text-left">
                             <div class="flex items-center">
-                                <img class="w-10 h-10 rounded-full mr-4" src="https://placehold.co/40x40/E2E8F0/4A5568?text=P1" alt="Product Image">
-                                <span class="font-medium">iPhone 15 Pro Max</span>
+                                <img class="w-10 h-10 rounded-full mr-4" src="${p.image_url}" alt="${p.name}">
+                                <span class="font-medium">${p.name}</span>
                             </div>
                         </td>
-                        <td class="py-3 px-6 text-center">32,000,000đ</td>
-                        <td class="py-3 px-6 text-center">99</td>
-                        <td class="py-3 px-6 text-center">
-                            <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Còn hàng</span>
-                        </td>
+                        <td class="py-3 px-6 text-center">${p.price}</td>
+                        <td class="py-3 px-6 text-center">${p.stock}</td>
+                        <c:choose>
+                            <c:when test="${p.stock == 0}">
+                                <td class="py-3 px-6 text-center">
+                                    <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Hết hàng</span>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td class="py-3 px-6 text-center">
+                                    <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Còn hàng</span>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
+
                         <td class="py-3 px-6 text-center">
                             <div class="flex item-center justify-center">
-                                <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" title="Xem"><i class="fas fa-eye"></i></button>
-                                <button class="w-6 mr-2 transform hover:text-yellow-500 hover:scale-110" title="Sửa"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="w-6 mr-2 transform hover:text-red-500 hover:scale-110" title="Xóa"><i class="fas fa-trash-alt"></i></button>
+                                <a class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" title="Xem"><i class="fas fa-eye"></i></a>
+                                <a href="/admin/manage-product/update/${p.id}" class="w-6 mr-2 transform hover:text-yellow-500 hover:scale-110" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                <a class="w-6 mr-2 transform hover:text-red-500 hover:scale-110" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         </td>
                     </tr>
-                    <!-- Mẫu sản phẩm 2 -->
-                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-left whitespace-nowrap">#1202</td>
-                        <td class="py-3 px-6 text-left">
-                            <div class="flex items-center">
-                                <img class="w-10 h-10 rounded-full mr-4" src="https://placehold.co/40x40/E2E8F0/4A5568?text=P2" alt="Product Image">
-                                <span class="font-medium">Macbook Pro M3</span>
-                            </div>
-                        </td>
-                        <td class="py-3 px-6 text-center">55,000,000đ</td>
-                        <td class="py-3 px-6 text-center">35</td>
-                        <td class="py-3 px-6 text-center">
-                            <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Còn hàng</span>
-                        </td>
-                        <td class="py-3 px-6 text-center">
-                            <div class="flex item-center justify-center">
-                                <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" title="Xem"><i class="fas fa-eye"></i></button>
-                                <button class="w-6 mr-2 transform hover:text-yellow-500 hover:scale-110" title="Sửa"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="w-6 mr-2 transform hover:text-red-500 hover:scale-110" title="Xóa"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- Mẫu sản phẩm 3 -->
-                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                        <td class="py-3 px-6 text-left whitespace-nowrap">#1203</td>
-                        <td class="py-3 px-6 text-left">
-                            <div class="flex items-center">
-                                <img class="w-10 h-10 rounded-full mr-4" src="https://placehold.co/40x40/E2E8F0/4A5568?text=P3" alt="Product Image">
-                                <span class="font-medium">Sony WH-1000XM5</span>
-                            </div>
-                        </td>
-                        <td class="py-3 px-6 text-center">7,500,000đ</td>
-                        <td class="py-3 px-6 text-center">0</td>
-                        <td class="py-3 px-6 text-center">
-                            <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Hết hàng</span>
-                        </td>
-                        <td class="py-3 px-6 text-center">
-                            <div class="flex item-center justify-center">
-                                <button class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" title="Xem"><i class="fas fa-eye"></i></button>
-                                <button class="w-6 mr-2 transform hover:text-yellow-500 hover:scale-110" title="Sửa"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="w-6 mr-2 transform hover:text-red-500 hover:scale-110" title="Xóa"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>

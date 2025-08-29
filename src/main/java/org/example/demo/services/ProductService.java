@@ -22,7 +22,9 @@ public class ProductService {
     public Product getProductById(String productId) {
 
         try{
-            return productDAO.findProductById(productId);
+            Product p = productDAO.findProductById(productId);
+
+            return p;
         }catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -104,6 +104,12 @@ public class Product {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+                ", size='" + size + '\'' +
+                ", description='" + description + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", best_seller=" + best_seller +
+                ", stock=" + stock +
+
                 '}';
 
     }
