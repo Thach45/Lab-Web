@@ -2,10 +2,7 @@ package org.example.demo.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import org.example.demo.dao.UserDAO;
 import org.example.demo.models.UserModel;
 import org.example.demo.services.AuthenticationService;
@@ -13,7 +10,7 @@ import org.example.demo.services.AuthenticationService;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/loginCookie")
+@WebServlet("/login")
 public class LoginByCookie extends HttpServlet {
     private AuthenticationService userService;
 
@@ -36,9 +33,10 @@ public class LoginByCookie extends HttpServlet {
             throw new RuntimeException(e);
         }
         if (user != null) {
-            Cookie usernameCookie = new Cookie("username", userName);
-            usernameCookie.setMaxAge(60 * 60 * 24); // 1 day
-            resp.addCookie(usernameCookie);
+            HttpSession session = req.getSession();
+            session.setAttribute("username", userName); //lưu trữ thông tin người dùng
+
+            session.setMaxInactiveInterval(30 * 60); //thời gian hết hạn của session là 30 phút
             resp.sendRedirect(req.getContextPath() + "/home");
         }
 

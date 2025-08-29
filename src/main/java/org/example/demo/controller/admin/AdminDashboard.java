@@ -1,4 +1,4 @@
-package org.example.demo.controller;
+package org.example.demo.controller.admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,13 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-@WebServlet("/logout")
-public class Logout extends HttpServlet {
+
+@WebServlet("/admin")
+public class AdminDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Xóa session để đăng xuất người dùng
-        req.getSession().invalidate();
-        // Chuyển hướng người dùng về trang đăng nhập hoặc trang chủ
-        resp.sendRedirect(req.getContextPath() + "/login");
+        resp.setContentType("text/html");
+        req.getRequestDispatcher("view/page/admin/manageProduct.jsp").forward(req, resp);
     }
 }

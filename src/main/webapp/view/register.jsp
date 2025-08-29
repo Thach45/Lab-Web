@@ -16,8 +16,7 @@
             <label for="username" class="block text-sm font-medium text-gray-700">Tài khoản</label>
             <input type="text" id="username" name="username"
                    class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800"
-                   placeholder="nguyenvana" required>
-        </div>
+                   placeholder="nguyenvana
 
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -44,7 +43,7 @@
     <!-- Link quay lại login -->
     <p class="mt-6 text-sm text-center text-gray-600">
         Bạn đã có tài khoản?
-        <a href="/loginCookie" class="text-indigo-600 hover:underline font-medium">Đăng nhập</a>
+        <a href="/login" class="text-indigo-600 hover:underline font-medium">Đăng nhập</a>
     </p>
 </div>
 </body>

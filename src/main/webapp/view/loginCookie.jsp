@@ -11,7 +11,7 @@
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Đăng nhập</h2>
 
     <!-- Form login -->
-    <form action="loginCookie" method="post" class="space-y-5">
+    <form action="login" method="post" class="space-y-5">
         <div>
             <label for="username" class="block text-sm font-medium text-gray-700">Tài khoản</label>
             <input type="text" id="username" name="username"

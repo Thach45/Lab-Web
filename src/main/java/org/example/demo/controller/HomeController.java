@@ -40,7 +40,7 @@ public class HomeController extends HttpServlet {
             }
         request.setAttribute("product", products);
         request.setAttribute("userName", userName);
-        request.getRequestDispatcher("/view/page/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/page/client/home.jsp").forward(request, response);
     }
 
 }

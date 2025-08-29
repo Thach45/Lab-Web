@@ -43,7 +43,7 @@
 <body class="bg-gray-50">
 
 <!-- Header Section -->
-<%@ include file="../layout/header.jsp" %>
+<%@ include file="../../layout/client/header.jsp" %>
 <!-- Hero Section -->
 <section class="hero-gradient pt-24 pb-20">
     <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center">
@@ -55,7 +55,7 @@
             <a href="#menu" class="bg-pink-500 text-white py-3 px-8 rounded-full text-lg font-bold hover:bg-pink-600 transition-transform hover:scale-105 duration-300 shadow-xl shadow-pink-500/40">Xem thực đơn ngay!</a>
         </div>
         <div class="lg:w-1/2" data-aos="fade-left" data-aos-delay="200">
-            <img src="../../assets/img/trasua.png" alt="Ly trà sữa hấp dẫn" class="rounded-3xl shadow-2xl w-full max-w-md mx-auto">
+            <img src="../../../assets/img/trasua.png" alt="Ly trà sữa hấp dẫn" class="rounded-3xl shadow-2xl w-full max-w-md mx-auto">
         </div>
     </div>
 </section>
@@ -98,7 +98,7 @@
 <section id="about" class="bg-white py-20">
     <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
         <div class="md:w-1/2" data-aos="zoom-in-right">
-            <img src="../../assets/img/trasua.png" alt="Không gian quán trà sữa" class="rounded-2xl shadow-xl">
+            <img src="../../../assets/img/trasua.png" alt="Không gian quán trà sữa" class="rounded-2xl shadow-xl">
         </div>
         <div class="md:w-1/2" data-aos="zoom-in-left" data-aos-delay="100">
             <h2 class="text-4xl font-extrabold text-gray-800 mb-4">Câu chuyện của BobaBliss</h2>
@@ -146,7 +146,7 @@
 </section>
 
 <!-- Footer -->
-<%@ include file="../layout/footer.jsp" %>
+<%@ include file="../../layout/client/footer.jsp" %>
 
 <!-- Animate On Scroll Library JS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
