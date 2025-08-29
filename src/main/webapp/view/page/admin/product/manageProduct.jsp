@@ -26,7 +26,8 @@
 <body class="bg-gray-100 font-sans">
 
 <div class="relative min-h-screen flex flex-col md:flex-row">
-    <%@ include file="../../layout/admin/sidebar.jsp" %>
+    <%@ include file="../../../layout/admin/sidebar.jsp" %>
+<%--    Main feature--%>
     <div class="flex-1 p-6 lg:p-10 overflow-y-auto">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Quản lý sản phẩm</h1>
 

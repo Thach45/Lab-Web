@@ -25,16 +25,16 @@
 
         <!-- Navigation -->
         <nav>
-            <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
+            <a href="/admin/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
                 <i class="fas fa-tachometer-alt mr-3"></i> Bảng điều khiển
             </a>
-            <a href="#" class="block py-2.5 px-4 rounded transition duration-200 bg-gray-900 font-bold">
+            <a href="/admin/manage-product" class="block py-2.5 px-4 rounded transition duration-200 bg-gray-900 font-bold">
                 <i class="fas fa-box-open mr-3"></i> Quản lý sản phẩm
             </a>
-            <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
+            <a href="admin/manage-order" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
                 <i class="fas fa-shopping-cart mr-3"></i> Quản lý đơn hàng
             </a>
-            <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
+            <a href="/admin/manage-user" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
                 <i class="fas fa-users mr-3"></i> Quản lý khách hàng
             </a>
             <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
