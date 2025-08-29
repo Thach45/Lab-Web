@@ -5,6 +5,7 @@ import org.example.demo.models.Product;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Random;
 
 public class ProductService {
     private final ProductDAO productDAO;
@@ -33,6 +34,9 @@ public class ProductService {
         if (existProduct != null) {
             throw new IllegalArgumentException("Product with ID " + product.getId() + " already exists.");
         }
+        Random random = new Random();
+
+
         return productDAO.createProduct(product);
     }
     public void deleteProduct(String productId) {

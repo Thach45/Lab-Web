@@ -1,5 +1,7 @@
 package org.example.demo.models;
 
+import java.util.UUID;
+
 public class Product {
     private String id;
     private String name;
@@ -26,8 +28,20 @@ public class Product {
         this.best_seller = best_seller;
     }
 
-    public Product(String id, String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+    public Product( String id,String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+
         this.id = id;
+        this.name = name;
+        this.price = price;
+        this.size = size;
+        this.description = description;
+        this.image_url = image_url;
+        this.best_seller = best_seller;
+        this.stock = stock;
+    }
+    public Product( String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.price = price;
         this.size = size;

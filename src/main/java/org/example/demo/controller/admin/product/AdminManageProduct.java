@@ -1,4 +1,4 @@
-package org.example.demo.controller.admin;
+package org.example.demo.controller.admin.product;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
