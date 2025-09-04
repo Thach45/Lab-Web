@@ -1,10 +1,23 @@
-package org.example.demo.models;
+package org.example.demo.entitys;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class UserModel {
+    @Id
     private String id;
+
+    @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String role;
 
     public UserModel(String id, String username, String password, String email, String role) {
@@ -13,6 +26,8 @@ public class UserModel {
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+    public UserModel() {
     }
 
     public String getId() {

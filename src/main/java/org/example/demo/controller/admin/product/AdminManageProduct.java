@@ -5,9 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.demo.dao.ProductDAO;
-import org.example.demo.models.Product;
-import org.example.demo.services.ProductService;
+import org.example.demo.entitys.Product;
+import org.example.demo.service.ProductService;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,8 +17,9 @@ public class AdminManageProduct extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        productService = new ProductService(new ProductDAO());
+        productService = new ProductService();
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -27,5 +27,13 @@ public class AdminManageProduct extends HttpServlet {
         req.setAttribute("products", products);
 
         req.getRequestDispatcher("/view/page/admin/product/manageProduct.jsp").forward(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        if (productService != null) {
+            productService.close();
+        }
+        super.destroy();
     }
 }

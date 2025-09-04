@@ -1,15 +1,33 @@
-package org.example.demo.models;
+package org.example.demo.entitys;
 
+import jakarta.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name = "products")
 public class Product {
+    @Id
     private String id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column
     private String size;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "image_url")
     private String image_url;
+
+    @Column(nullable = false)
     private double price;
+
+    @Column(name = "best_seller")
     private Boolean best_seller;
+
+    @Column
     private int stock;
 
     public int getStock() {
@@ -28,7 +46,7 @@ public class Product {
         this.best_seller = best_seller;
     }
 
-    public Product( String id,String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+    public Product(String id, String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
 
         this.id = id;
         this.name = name;
@@ -39,7 +57,7 @@ public class Product {
         this.best_seller = best_seller;
         this.stock = stock;
     }
-    public Product( String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+    public Product(String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
 
         this.id = UUID.randomUUID().toString();
         this.name = name;
@@ -50,7 +68,8 @@ public class Product {
         this.best_seller = best_seller;
         this.stock = stock;
     }
-
+    public Product() {
+    }
     public String getSize() {
         return size;
     }

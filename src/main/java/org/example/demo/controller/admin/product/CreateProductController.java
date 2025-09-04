@@ -9,10 +9,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import org.example.demo.dao.ProductDAO;
-import org.example.demo.models.Product;
+import org.example.demo.entitys.Product;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.example.demo.services.ProductService;
+import org.example.demo.service.ProductService;
 
 import java.io.IOException;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class CreateProductController extends HttpServlet {
                 "secure", true
 
         ));
-        productService = new ProductService(new ProductDAO());
+        productService = new ProductService();
     }
 
     @Override
@@ -85,7 +84,7 @@ public class CreateProductController extends HttpServlet {
             Product newProduct = new Product(name, price, size, description, imageUrl, isBestSeller,stock );
 
 
-            Product product = productService.createProduct(newProduct);
+            productService.addProduct(newProduct);
             System.out.println("Thêm sản phẩm thành công!");
             System.out.println("Tên: " + name);
             System.out.println("URL ảnh: " + imageUrl);

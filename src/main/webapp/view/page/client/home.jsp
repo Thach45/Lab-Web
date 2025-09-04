@@ -68,7 +68,7 @@
             <p class="text-gray-500 mt-2">Những hương vị được yêu thích nhất, bạn đã thử chưa?</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <c:forEach var="p" items="${product}">
+            <c:forEach var="p" items="${products}">
                 <div class="bg-white rounded-2xl overflow-hidden card-shadow transition-all duration-300" data-aos="fade-up">
                     <div class="relative">
                         <img src="${p.image_url}" alt="${p.name}" class="w-full h-64 object-cover">

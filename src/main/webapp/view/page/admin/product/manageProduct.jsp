@@ -96,7 +96,7 @@
                             <div class="flex item-center justify-center">
                                 <a class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" title="Xem"><i class="fas fa-eye"></i></a>
                                 <a href="/admin/manage-product/update/${p.id}" class="w-6 mr-2 transform hover:text-yellow-500 hover:scale-110" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-                                <a class="w-6 mr-2 transform hover:text-red-500 hover:scale-110" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                <a href="/admin/manage-product/delete/${p.id}" class="w-6 mr-2 transform hover:text-red-500 hover:scale-110" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         </td>
                     </tr>

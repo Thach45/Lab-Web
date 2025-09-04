@@ -2,16 +2,13 @@ package org.example.demo.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.demo.dao.UserDAO;
-import org.example.demo.models.UserModel;
-import org.example.demo.services.AuthenticationService;
+import org.example.demo.service.AuthenticationService;
+import org.example.demo.service.AuthenticationService.RegisterResult;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/register")
 public class RegisterController extends HttpServlet {
@@ -19,23 +16,35 @@ public class RegisterController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        authService = new AuthenticationService(new UserDAO());
+        authService = new AuthenticationService();
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
         request.getRequestDispatcher("/view/register.jsp").forward(request, response);
     }
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getParameter("username");
-        String password = req.getParameter("password");
-        String email = req.getParameter("email");
 
-        try {
-            authService.register(userName, password, email);
-            resp.sendRedirect(req.getContextPath() + "/loginCookie");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+
+        RegisterResult result = authService.register(username, password, email);
+
+        if (result.isSuccess()) {
+            response.sendRedirect(request.getContextPath() + "/loginSession");
+        } else {
+            request.setAttribute("error", result.getMessage());
+            request.getRequestDispatcher("/view/register.jsp").forward(request, response);
         }
+    }
+
+    @Override
+    public void destroy() {
+        if (authService != null) {
+            authService.close();
+        }
+        super.destroy();
     }
 }
