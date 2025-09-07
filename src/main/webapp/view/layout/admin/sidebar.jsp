@@ -34,6 +34,9 @@
             <a href="/admin/manage-category" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
                 <i class="fa-solid fa-list mr-3"></i> Quản lý danh mục
             </a>
+            <a href="/admin/manage-topping" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
+                <i class="fa-solid fa-ice-cream mr-3"></i> Quản lý topping
+            </a>
             <a href="/admin/manage-user" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
                 <i class="fas fa-users mr-3"></i> Quản lý khách hàng
             </a>
