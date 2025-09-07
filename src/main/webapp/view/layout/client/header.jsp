@@ -30,13 +30,13 @@
 
         <!-- Mobile Menu Button -->
         <div class="md:hidden">
-            <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+            <button id="mobile-menu-button" data-mobile-menu-toggle class="text-gray-700 focus:outline-none">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </div>
     </nav>
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+    <div id="mobile-menu" data-mobile-menu class="hidden md:hidden px-6 pb-4 space-y-2">
         <a href="#menu" class="block text-gray-700 hover:text-pink-500">Thực đơn</a>
         <a href="#about" class="block text-gray-700 hover:text-pink-500">Về chúng tôi</a>
         <a href="#contact" class="block text-gray-700 hover:text-pink-500">Liên hệ</a>

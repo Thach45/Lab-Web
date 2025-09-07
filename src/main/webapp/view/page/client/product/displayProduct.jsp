@@ -57,59 +57,61 @@
                 <div class="sticky top-28 p-6 bg-white rounded-xl shadow-sm border border-stone-200/80">
                     <h3 class="text-xl font-bold text-stone-800 pb-4 border-b border-stone-200">Bộ lọc</h3>
 
-                    <div class="mt-6">
-                        <h4 class="font-semibold text-stone-700 mb-3">Danh mục sản phẩm</h4>
-                        <div class="space-y-2 text-stone-600">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" class="h-5 w-5 rounded border-stone-300 text-fuchsia-600 focus:ring-fuchsia-500 custom-checkbox">
-                                <span class="ml-3">Trà Sữa Truyền Thống</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" class="h-5 w-5 rounded border-stone-300 text-fuchsia-600 focus:ring-fuchsia-500 custom-checkbox" checked>
-                                <span class="ml-3">Trà Trái Cây</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" class="h-5 w-5 rounded border-stone-300 text-fuchsia-600 focus:ring-fuchsia-500 custom-checkbox">
-                                <span class="ml-3">Macchiato</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" class="h-5 w-5 rounded border-stone-300 text-fuchsia-600 focus:ring-fuchsia-500 custom-checkbox">
-                                <span class="ml-3">Đá xay</span>
-                            </label>
+                    <form id="desktopFilterForm">
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-stone-700 mb-3">Danh mục sản phẩm</h4>
+                            <div class="space-y-2 text-stone-600">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="category" value="all" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                                           ${currentCategory == 'all' ? 'checked' : ''} ${empty currentCategory ? 'checked' : ''}>
+                                    <span class="ml-3">Tất cả</span>
+                                </label>
+                                <c:forEach var="category" items="${categories}">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="category" value="${category.name}" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                                               ${currentCategory == category.name ? 'checked' : ''}>
+                                        <span class="ml-3">${category.name}</span>
+                                    </label>
+                                </c:forEach>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mt-8">
-                        <h4 class="font-semibold text-stone-700 mb-3">Mức giá</h4>
-                        <div class="space-y-2 text-stone-600">
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="price" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500">
-                                <span class="ml-3">Tất cả</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="price" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500">
-                                <span class="ml-3">Dưới 40.000đ</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="price" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500">
-                                <span class="ml-3">40.000đ - 60.000đ</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer">
-                                <input type="radio" name="price" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500">
-                                <span class="ml-3">Trên 60.000đ</span>
-                            </label>
+                        <div class="mt-8">
+                            <h4 class="font-semibold text-stone-700 mb-3">Mức giá</h4>
+                            <div class="space-y-2 text-stone-600">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="priceRange" value="all" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                                           ${currentPriceRange == 'all' ? 'checked' : ''} ${empty currentPriceRange ? 'checked' : ''}>
+                                    <span class="ml-3">Tất cả</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="priceRange" value="under_40k" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                                           ${currentPriceRange == 'under_40k' ? 'checked' : ''}>
+                                    <span class="ml-3">Dưới 40.000đ</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="priceRange" value="40k_60k" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                                           ${currentPriceRange == '40k_60k' ? 'checked' : ''}>
+                                    <span class="ml-3">40.000đ - 60.000đ</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="priceRange" value="over_60k" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                                           ${currentPriceRange == 'over_60k' ? 'checked' : ''}>
+                                    <span class="ml-3">Trên 60.000đ</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <button class="mt-8 w-full bg-fuchsia-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-fuchsia-700 transition-colors duration-300">
-                        Áp dụng
-                    </button>
+                        <button type="submit" class="mt-8 w-full bg-fuchsia-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-fuchsia-700 transition-colors duration-300">
+                            Áp dụng
+                        </button>
+                    </form>
                 </div>
             </aside>
 
             <div class="lg:col-span-3">
                 <div class="flex justify-between items-center mb-6" data-aos="fade-in">
-                    <p class="text-stone-600">Hiển thị <span class="font-semibold">12</span> trên <span class="font-semibold">48</span> sản phẩm</p>
+                    <p class="text-stone-600">Hiển thị <span class="font-semibold">${products.size()}</span> trên <span class="font-semibold">${totalProducts}</span> sản phẩm</p>
 
                     <button @click="isFilterOpen = true" class="lg:hidden bg-white border border-stone-300 px-4 py-2 rounded-lg flex items-center gap-2 text-stone-700">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" /></svg>
@@ -117,11 +119,13 @@
                     </button>
 
                     <div class="hidden lg:block">
-                        <select class="border border-stone-300 rounded-lg p-2 focus:ring-2 focus:ring-fuchsia-400 focus:border-fuchsia-400">
-                            <option>Sắp xếp theo: Mặc định</option>
-                            <option>Sắp xếp theo: Bán chạy</option>
-                            <option>Sắp xếp theo: Giá tăng dần</option>
-                            <option>Sắp xếp theo: Giá giảm dần</option>
+                        <select id="sortSelect" class="border border-stone-300 rounded-lg p-2 focus:ring-2 focus:ring-fuchsia-400 focus:border-fuchsia-400">
+                            <option value="default" ${currentSortBy == 'default' ? 'selected' : ''}>Sắp xếp theo: Mặc định</option>
+                            <option value="best_seller" ${currentSortBy == 'best_seller' ? 'selected' : ''}>Sắp xếp theo: Bán chạy</option>
+                            <option value="price_asc" ${currentSortBy == 'price_asc' ? 'selected' : ''}>Sắp xếp theo: Giá tăng dần</option>
+                            <option value="price_desc" ${currentSortBy == 'price_desc' ? 'selected' : ''}>Sắp xếp theo: Giá giảm dần</option>
+                            <option value="name_asc" ${currentSortBy == 'name_asc' ? 'selected' : ''}>Sắp xếp theo: Tên A-Z</option>
+                            <option value="name_desc" ${currentSortBy == 'name_desc' ? 'selected' : ''}>Sắp xếp theo: Tên Z-A</option>
                         </select>
                     </div>
                 </div>
@@ -153,16 +157,52 @@
                     </c:forEach>
                 </div>
 
-                <div class="mt-12 flex justify-center" data-aos="fade-up">
-                    <nav class="flex items-center justify-center gap-2">
-                        <a href="#" class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-500 hover:bg-stone-100 transition-colors">&laquo;</a>
-                        <a href="#" class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-fuchsia-600 text-white font-semibold shadow-sm">1</a>
-                        <a href="#" class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-700 hover:bg-stone-100 transition-colors">2</a>
-                        <a href="#" class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-700 hover:bg-stone-100 transition-colors">3</a>
-                        <span class="inline-flex items-center justify-center h-10 w-10 text-stone-500">...</span>
-                        <a href="#" class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-500 hover:bg-stone-100 transition-colors">&raquo;</a>
-                    </nav>
-                </div>
+                <c:if test="${totalPages > 1}">
+                    <div class="mt-12 flex justify-center" data-aos="fade-up">
+                        <nav class="flex items-center justify-center gap-2">
+                            <!-- Nút Previous -->
+                            <c:choose>
+                                <c:when test="${currentPage > 1}">
+                                    <a href="?category=${currentCategory}&priceRange=${currentPriceRange}&sortBy=${currentSortBy}&page=${currentPage - 1}" 
+                                       class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-500 hover:bg-stone-100 transition-colors">&laquo;</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-gray-100 border border-stone-200 text-stone-300 cursor-not-allowed">&laquo;</span>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <!-- Các nút trang -->
+                            <c:forEach begin="1" end="${totalPages}" var="pageNum">
+                                <c:choose>
+                                    <c:when test="${pageNum == currentPage}">
+                                        <span class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-fuchsia-600 text-white font-semibold shadow-sm">${pageNum}</span>
+                                    </c:when>
+                                    <c:when test="${pageNum <= 3 || pageNum > totalPages - 3 || (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)}">
+                                        <a href="?category=${currentCategory}&priceRange=${currentPriceRange}&sortBy=${currentSortBy}&page=${pageNum}" 
+                                           class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-700 hover:bg-stone-100 transition-colors">${pageNum}</a>
+                                    </c:when>
+                                    <c:when test="${pageNum == 4 && currentPage > 5}">
+                                        <span class="inline-flex items-center justify-center h-10 w-10 text-stone-500">...</span>
+                                    </c:when>
+                                    <c:when test="${pageNum == totalPages - 3 && currentPage < totalPages - 4}">
+                                        <span class="inline-flex items-center justify-center h-10 w-10 text-stone-500">...</span>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+
+                            <!-- Nút Next -->
+                            <c:choose>
+                                <c:when test="${currentPage < totalPages}">
+                                    <a href="?category=${currentCategory}&priceRange=${currentPriceRange}&sortBy=${currentSortBy}&page=${currentPage + 1}" 
+                                       class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white border border-stone-200 text-stone-500 hover:bg-stone-100 transition-colors">&raquo;</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-gray-100 border border-stone-200 text-stone-300 cursor-not-allowed">&raquo;</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </nav>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -194,19 +234,64 @@
         <h3 class="text-xl font-bold text-stone-800">Bộ lọc</h3>
         <button @click="isFilterOpen = false" class="text-stone-500 hover:text-stone-800">&times;</button>
     </div>
+    
+    <form id="mobileFilterForm" class="mt-6">
+        <div class="mb-6">
+            <h4 class="font-semibold text-stone-700 mb-3">Danh mục sản phẩm</h4>
+            <div class="space-y-2 text-stone-600">
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="category" value="all" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                           ${currentCategory == 'all' ? 'checked' : ''} ${empty currentCategory ? 'checked' : ''}>
+                    <span class="ml-3">Tất cả</span>
+                </label>
+                <c:forEach var="category" items="${categories}">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="category" value="${category.name}" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                               ${currentCategory == category.name ? 'checked' : ''}>
+                        <span class="ml-3">${category.name}</span>
+                    </label>
+                </c:forEach>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h4 class="font-semibold text-stone-700 mb-3">Mức giá</h4>
+            <div class="space-y-2 text-stone-600">
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="priceRange" value="all" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                           ${currentPriceRange == 'all' ? 'checked' : ''} ${empty currentPriceRange ? 'checked' : ''}>
+                    <span class="ml-3">Tất cả</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="priceRange" value="under_40k" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                           ${currentPriceRange == 'under_40k' ? 'checked' : ''}>
+                    <span class="ml-3">Dưới 40.000đ</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="priceRange" value="40k_60k" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                           ${currentPriceRange == '40k_60k' ? 'checked' : ''}>
+                    <span class="ml-3">40.000đ - 60.000đ</span>
+                </label>
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="priceRange" value="over_60k" class="h-5 w-5 text-fuchsia-600 focus:ring-fuchsia-500" 
+                           ${currentPriceRange == 'over_60k' ? 'checked' : ''}>
+                    <span class="ml-3">Trên 60.000đ</span>
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-fuchsia-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-fuchsia-700 transition-colors duration-300">
+            Áp dụng
+        </button>
+    </form>
 </aside>
 
 
 <%@ include file="../../../layout/client/footer.jsp" %>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({
-        duration: 600,
-        once: true,
-        disable: 'phone'
-    });
-</script>
+<script src="/assets/js/client-common.js"></script>
+<script src="/assets/js/product-filter.js"></script>
 
 </body>
 </html>

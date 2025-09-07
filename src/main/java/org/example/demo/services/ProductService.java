@@ -3,9 +3,7 @@ package org.example.demo.services;
 import org.example.demo.dao.ProductDAO;
 import org.example.demo.models.Product;
 
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
 
 public class ProductService {
     private final ProductDAO productDAO;
@@ -36,8 +34,6 @@ public class ProductService {
         if (existProduct != null) {
             throw new IllegalArgumentException("Product with ID " + product.getId() + " already exists.");
         }
-        Random random = new Random();
-
 
         return productDAO.createProduct(product);
     }
@@ -58,5 +54,21 @@ public class ProductService {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Lấy sản phẩm với lọc và phân trang
+    public List<Product> getProductsWithFilter(String category, String priceRange, String sortBy, int page, int pageSize) {
+        return productDAO.findProductsWithFilter(category, priceRange, sortBy, page, pageSize);
+    }
+
+    // Đếm tổng số sản phẩm với filter
+    public int countProductsWithFilter(String category, String priceRange) {
+        return productDAO.countProductsWithFilter(category, priceRange);
+    }
+
+    // Tính tổng số trang
+    public int getTotalPages(String category, String priceRange, int pageSize) {
+        int totalProducts = countProductsWithFilter(category, priceRange);
+        return (int) Math.ceil((double) totalProducts / pageSize);
     }
 }

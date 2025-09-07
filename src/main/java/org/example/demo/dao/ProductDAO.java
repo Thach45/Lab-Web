@@ -114,4 +114,144 @@ public class ProductDAO {
             e.printStackTrace();
         }
     }
+
+    // Phương thức lấy sản phẩm với lọc và phân trang
+    public List<Product> findProductsWithFilter(String category, String priceRange, String sortBy, int page, int pageSize) {
+        List<Product> products = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT p.id, p.name, p.price, p.size, p.description, p.image_url, p.best_seller, p.stock, c.name as category_name ");
+        sql.append("FROM products p ");
+        sql.append("LEFT JOIN category c ON p.category_id = c.category_id ");
+        sql.append("WHERE 1=1 ");
+
+        List<Object> parameters = new ArrayList<>();
+
+        // Lọc theo category
+        if (category != null && !category.isEmpty() && !category.equals("all")) {
+            sql.append("AND c.name = ? ");
+            parameters.add(category);
+        }
+
+        // Lọc theo giá
+        if (priceRange != null && !priceRange.isEmpty() && !priceRange.equals("all")) {
+            switch (priceRange) {
+                case "under_40k":
+                    sql.append("AND p.price < 40000 ");
+                    break;
+                case "40k_60k":
+                    sql.append("AND p.price >= 40000 AND p.price <= 60000 ");
+                    break;
+                case "over_60k":
+                    sql.append("AND p.price > 60000 ");
+                    break;
+            }
+        }
+
+        // Sắp xếp
+        if (sortBy != null && !sortBy.isEmpty()) {
+            switch (sortBy) {
+                case "price_asc":
+                    sql.append("ORDER BY p.price ASC ");
+                    break;
+                case "price_desc":
+                    sql.append("ORDER BY p.price DESC ");
+                    break;
+                case "name_asc":
+                    sql.append("ORDER BY p.name ASC ");
+                    break;
+                case "name_desc":
+                    sql.append("ORDER BY p.name DESC ");
+                    break;
+                case "best_seller":
+                    sql.append("ORDER BY p.best_seller DESC, p.name ASC ");
+                    break;
+                default:
+                    sql.append("ORDER BY p.id ASC ");
+                    break;
+            }
+        } else {
+            sql.append("ORDER BY p.id ASC ");
+        }
+
+        // Phân trang
+        sql.append("LIMIT ? OFFSET ?");
+        parameters.add(pageSize);
+        parameters.add((page - 1) * pageSize);
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+            
+            for (int i = 0; i < parameters.size(); i++) {
+                pstmt.setObject(i + 1, parameters.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Product product = new Product(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("size"),
+                        rs.getString("description"),
+                        rs.getString("image_url"),
+                        rs.getBoolean("best_seller"),
+                        rs.getInt("stock"),
+                        rs.getString("category_name")
+                    );
+                    products.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    // Đếm tổng số sản phẩm với filter
+    public int countProductsWithFilter(String category, String priceRange) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT COUNT(*) FROM products p ");
+        sql.append("LEFT JOIN category c ON p.category_id = c.category_id ");
+        sql.append("WHERE 1=1 ");
+
+        List<Object> parameters = new ArrayList<>();
+
+        // Lọc theo category
+        if (category != null && !category.isEmpty() && !category.equals("all")) {
+            sql.append("AND c.name = ? ");
+            parameters.add(category);
+        }
+
+        // Lọc theo giá
+        if (priceRange != null && !priceRange.isEmpty() && !priceRange.equals("all")) {
+            switch (priceRange) {
+                case "under_40k":
+                    sql.append("AND p.price < 40000 ");
+                    break;
+                case "40k_60k":
+                    sql.append("AND p.price >= 40000 AND p.price <= 60000 ");
+                    break;
+                case "over_60k":
+                    sql.append("AND p.price > 60000 ");
+                    break;
+            }
+        }
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+            
+            for (int i = 0; i < parameters.size(); i++) {
+                pstmt.setObject(i + 1, parameters.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
