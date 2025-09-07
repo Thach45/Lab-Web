@@ -7,21 +7,29 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
     public UserModel getUserByUsername(String username) {
-        String sql = "SELECT id, username, password, email, role FROM users WHERE username = ?";
+        String sql = "SELECT id, username, password, email, role, full_name, phone, is_active, address, created_at, updated_at FROM users WHERE username = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return new UserModel(
-                        rs.getString("id"),
+                        rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("email"),
-                        rs.getString("role")
+                        rs.getString("role"),
+                        rs.getString("full_name"),
+                        rs.getString("phone"),
+                        rs.getBoolean("is_active"),
+                        rs.getString("address"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
                 );
             }
         } catch (SQLException e) {

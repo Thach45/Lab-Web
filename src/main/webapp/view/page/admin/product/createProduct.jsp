@@ -1,3 +1,4 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%--
   Created by IntelliJ IDEA.
   User: macpro
@@ -54,7 +55,16 @@
                     <label for="stock" class="block text-sm font-medium text-gray-700">Số lượng tồn kho</label>
                     <input type="number" name="stock" id="stock" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ví dụ: 99">
                 </div>
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700">Danh mục</label>
+                    <select name="category" id="category" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white px-3 py-2">
+                    <c:forEach var="c" items="${categories}">
+                        <option value="${c.categoryId}">${c.name}</option>
+                    </c:forEach>
 
+
+                    </select>
+                </div>
                 <!-- Size -->
                 <div>
                     <label for="size" class="block text-sm font-medium text-gray-700">Size</label>

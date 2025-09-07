@@ -64,6 +64,7 @@
                         <th class="py-3 px-6 text-center">Giá</th>
                         <th class="py-3 px-6 text-center">Số lượng</th>
                         <th class="py-3 px-6 text-center">Trạng thái</th>
+                        <th class="py-3 px-6 text-center">Danh mục</th>
                         <th class="py-3 px-6 text-center">Hành động</th>
                     </tr>
                     </thead>
@@ -91,7 +92,7 @@
                                 </td>
                             </c:otherwise>
                         </c:choose>
-
+                         <td class="py-3 px-6 text-center">${p.category}</td>
                         <td class="py-3 px-6 text-center">
                             <div class="flex item-center justify-center">
                                 <a class="w-6 mr-2 transform hover:text-purple-500 hover:scale-110" title="Xem"><i class="fas fa-eye"></i></a>

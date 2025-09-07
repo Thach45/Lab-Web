@@ -11,10 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.example.demo.dao.ProductDAO;
+import org.example.demo.models.Category;
 import org.example.demo.models.Product;
+import org.example.demo.services.CategoryService;
 import org.example.demo.services.ProductService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/admin/manage-product/update/*")
@@ -22,6 +25,7 @@ import java.util.Map;
 public class UpdateProductController extends HttpServlet {
     private ProductService productService;
     private Cloudinary cloudinary;
+    private CategoryService categoryService;
     public void init() {
         Dotenv dotenv = Dotenv.configure().load();
         cloudinary = new Cloudinary(ObjectUtils.asMap(
@@ -32,15 +36,19 @@ public class UpdateProductController extends HttpServlet {
 
         ));
         productService = new ProductService(new ProductDAO());
+        categoryService = new CategoryService();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getPathInfo().substring(1);
         Product product = productService.getProductById(id);
         System.out.println(product);
-
+        resp.setContentType("text/html");
+        List<Category> categories = categoryService.getAllCategories();
+        req.setAttribute("categories", categories);
         resp.setContentType("text/html");
         req.setAttribute("product", product);
+
         req.getRequestDispatcher("/view/page/admin/product/updateProduct.jsp").forward(req, resp);
     }
     @Override
@@ -54,6 +62,8 @@ public class UpdateProductController extends HttpServlet {
             double price = Double.parseDouble(request.getParameter("price"));
             int stock = Integer.parseInt(request.getParameter("stock"));
             String size = request.getParameter("size");
+            String category = request.getParameter("category");
+            System.out.println(category);
             String description = request.getParameter("description");
             String id = request.getParameter("id");
             // Dùng getParameter trả về "on" nếu được check, null nếu không.
@@ -80,7 +90,7 @@ public class UpdateProductController extends HttpServlet {
                 imageUrl = request.getParameter("image_url_old");;
             }
 
-            Product newProduct = new Product(id,name, price, size, description, imageUrl, isBestSeller,stock );
+            Product newProduct = new Product(id,name, price, size, description, imageUrl, isBestSeller,stock, category );
 
 
             productService.updateProduct(newProduct);

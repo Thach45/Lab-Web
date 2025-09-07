@@ -57,6 +57,19 @@
                         <label for="stock" class="block text-sm font-medium text-gray-700">Số lượng tồn kho</label>
                         <input type="number" name="stock" id="stock" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="${product.stock}">
                     </div>
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700">Danh mục</label>
+                        <select name="category" id="category" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white px-3 py-2">
+                            <c:forEach var="c" items="${categories}">
+                                <option value="${c.categoryId}" <c:if test="${c.name == product.category}">selected</c:if>>
+                                        ${c.name}
+                                </option>
+
+                            </c:forEach>
+
+
+                        </select>
+                    </div>
 
                     <!-- Size -->
                     <div>
@@ -119,9 +132,11 @@
                     <!-- Description -->
                     <div class="md:col-span-2">
                         <label for="description" class="block text-sm font-medium text-gray-700">Mô tả sản phẩm</label>
-                        <textarea id="description" name="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" >
-                            ${product.description}
+                        <textarea id="description" name="description" rows="4"
+                                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <c:out value="${product.description}" />
                         </textarea>
+
                     </div>
                 </div>
 

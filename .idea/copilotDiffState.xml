@@ -3,6 +3,23 @@
   <component name="CopilotDiffPersistence">
     <option name="pendingDiffs">
       <map>
+        <entry key="$PROJECT_DIR$/src/main/java/org/example/demo/controller/admin/catogory/AdminManageCategory.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/org/example/demo/controller/admin/catogory/AdminManageCategory.java" />
+              <option name="updatedContent" value="package org.example.demo.controller.admin.catogory;&#10;&#10;import jakarta.servlet.ServletException;&#10;import jakarta.servlet.annotation.WebServlet;&#10;import jakarta.servlet.http.HttpServlet;&#10;import jakarta.servlet.http.HttpServletRequest;&#10;import jakarta.servlet.http.HttpServletResponse;&#10;import org.example.demo.models.Category;&#10;import org.example.demo.services.CategoryService;&#10;&#10;import java.io.IOException;&#10;import java.util.List;&#10;&#10;@WebServlet(&quot;/admin/manage-category&quot;)&#10;public class AdminManageCategory extends HttpServlet {&#10;    private CategoryService categoryService;&#10;&#10;    @Override&#10;    public void init() throws ServletException {&#10;        categoryService = new CategoryService();&#10;    }&#10;&#10;    @Override&#10;    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {&#10;        resp.setContentType(&quot;text/html&quot;);&#10;        List&lt;Category&gt; categories = categoryService.getAllCategories();&#10;        req.setAttribute(&quot;categories&quot;, categories);&#10;&#10;        req.getRequestDispatcher(&quot;/view/page/admin/category/manageCategory.jsp&quot;).forward(req, resp);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/org/example/demo/controller/admin/catogory/CategoryController.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/org/example/demo/controller/admin/catogory/CategoryController.java" />
+              <option name="originalContent" value="&#10;" />
+              <option name="updatedContent" value="package org.example.demo.controller.admin.catogory;&#10;&#10;import jakarta.servlet.ServletException;&#10;import jakarta.servlet.annotation.WebServlet;&#10;import jakarta.servlet.http.HttpServlet;&#10;import jakarta.servlet.http.HttpServletRequest;&#10;import jakarta.servlet.http.HttpServletResponse;&#10;import org.example.demo.services.CategoryService;&#10;&#10;import java.io.IOException;&#10;&#10;@WebServlet(&quot;/admin/category&quot;)&#10;public class CategoryController extends HttpServlet {&#10;    private CategoryService categoryService;&#10;&#10;    @Override&#10;    public void init() throws ServletException {&#10;        categoryService = new CategoryService();&#10;    }&#10;&#10;    @Override&#10;    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {&#10;        req.setAttribute(&quot;categories&quot;, categoryService.getAllCategories());&#10;        req.getRequestDispatcher(&quot;/view/admin/category/list.jsp&quot;).forward(req, resp);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/org/example/demo/dao/Product.java">
           <value>
             <PendingDiffInfo>

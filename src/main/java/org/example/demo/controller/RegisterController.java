@@ -33,7 +33,7 @@ public class RegisterController extends HttpServlet {
 
         try {
             authService.register(userName, password, email);
-            resp.sendRedirect(req.getContextPath() + "/loginCookie");
+            resp.sendRedirect(req.getContextPath() + "/login");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

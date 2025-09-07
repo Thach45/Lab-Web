@@ -10,11 +10,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.example.demo.dao.ProductDAO;
+import org.example.demo.models.Category;
 import org.example.demo.models.Product;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.example.demo.services.CategoryService;
 import org.example.demo.services.ProductService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 // 1. Khai báo URL pattern cho Servlet
@@ -25,6 +28,9 @@ public class CreateProductController extends HttpServlet {
 
     private Cloudinary cloudinary;
     private ProductService productService;
+    private CategoryService categoryService;
+
+
     // Khởi tạo Cloudinary khi Servlet được load lần đầu
     @Override
     public void init() {
@@ -38,10 +44,14 @@ public class CreateProductController extends HttpServlet {
 
         ));
         productService = new ProductService(new ProductDAO());
+        categoryService = new CategoryService();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+        List<Category> categories = categoryService.getAllCategories();
+        req.setAttribute("categories", categories);
 
         req.getRequestDispatcher("/view/page/admin/product/createProduct.jsp").forward(req, resp);
     }
@@ -54,6 +64,7 @@ public class CreateProductController extends HttpServlet {
         try {
             // 4. Lấy các thông tin từ form (text fields)
             String name = request.getParameter("name");
+            String categoryId = request.getParameter("categoryId");
             double price = Double.parseDouble(request.getParameter("price"));
             int stock = Integer.parseInt(request.getParameter("stock"));
             String size = request.getParameter("size");
@@ -82,7 +93,7 @@ public class CreateProductController extends HttpServlet {
                 imageUrl = "https://res.cloudinary.com/drblblupt/image/upload/v1756445107/ssq0tpsl7zx3bhlrx44a.png";
             }
 
-            Product newProduct = new Product(name, price, size, description, imageUrl, isBestSeller,stock );
+            Product newProduct = new Product(name, price, size, description, imageUrl, isBestSeller,stock, categoryId );
 
 
             Product product = productService.createProduct(newProduct);

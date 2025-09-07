@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class Product {
     private String id;
+    private String category;
     private String name;
     private String size;
     private String description;
@@ -11,6 +12,14 @@ public class Product {
     private double price;
     private Boolean best_seller;
     private int stock;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public int getStock() {
         return stock;
@@ -28,7 +37,7 @@ public class Product {
         this.best_seller = best_seller;
     }
 
-    public Product( String id,String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+    public Product( String id,String name, double price, String size, String description, String image_url, Boolean best_seller, int stock , String category) {
 
         this.id = id;
         this.name = name;
@@ -38,8 +47,9 @@ public class Product {
         this.image_url = image_url;
         this.best_seller = best_seller;
         this.stock = stock;
+        this.category = category;
     }
-    public Product( String name, double price, String size, String description, String image_url, Boolean best_seller, int stock) {
+    public Product( String name, double price, String size, String description, String image_url, Boolean best_seller, int stock, String category) {
 
         this.id = UUID.randomUUID().toString();
         this.name = name;
@@ -49,6 +59,8 @@ public class Product {
         this.image_url = image_url;
         this.best_seller = best_seller;
         this.stock = stock;
+        this.category = category;
+
     }
 
     public String getSize() {
@@ -109,6 +121,7 @@ public class Product {
                 ", image_url='" + image_url + '\'' +
                 ", best_seller=" + best_seller +
                 ", stock=" + stock +
+                ", category='" + category + '\'' +
 
                 '}';
 

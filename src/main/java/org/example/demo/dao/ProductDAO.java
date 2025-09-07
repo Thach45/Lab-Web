@@ -11,7 +11,9 @@ public class ProductDAO {
 
     public List<Product> findAllProduct() {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT id, name, price, size, description, image_url,best_seller, stock FROM products";
+        String sql = "SELECT p.id, p.name, p.price, p.size, p.description, p.image_url, p.best_seller, p.stock, c.name as category_name " +
+                    "FROM products p " +
+                    "LEFT JOIN category c ON p.category_id = c.category_id";
         try (Connection conn = DBUtil.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -23,9 +25,9 @@ public class ProductDAO {
                     rs.getString("size"),
                     rs.getString("description"),
                     rs.getString("image_url"),
-                        rs.getBoolean("best_seller"),
-                        rs.getInt("stock")
-
+                    rs.getBoolean("best_seller"),
+                    rs.getInt("stock"),
+                    rs.getString("category_name")
                 );
                 products.add(product);
             }
@@ -35,7 +37,10 @@ public class ProductDAO {
         return products;
     }
     public Product findProductById(String productId) {
-        String sql = "SELECT id, name, price, size, description, image_url,best_seller, stock FROM products WHERE id = ?";
+        String sql = "SELECT p.id, p.name, p.price, p.size, p.description, p.image_url, p.best_seller, p.stock, c.name as category_name " +
+                    "FROM products p " +
+                    "LEFT JOIN category c ON p.category_id = c.category_id " +
+                    "WHERE p.id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, productId);
@@ -48,8 +53,9 @@ public class ProductDAO {
                         rs.getString("size"),
                         rs.getString("description"),
                         rs.getString("image_url"),
-                            rs.getBoolean("best_seller"),
-                            rs.getInt("stock")
+                        rs.getBoolean("best_seller"),
+                        rs.getInt("stock"),
+                        rs.getString("category_name")
                     );
                 }
             }
@@ -69,7 +75,8 @@ public class ProductDAO {
         }
     }
     public Product createProduct(Product product) {
-        String sql = "INSERT INTO products (id, name, price, size, description, image_url, best_seller, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO products (id, name, price, size, description, image_url, best_seller, stock, category_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, (SELECT category_id FROM category WHERE name = ?))";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, product.getId());
@@ -80,6 +87,7 @@ public class ProductDAO {
             pstmt.setString(6, product.getImage_url());
             pstmt.setBoolean(7, product.getBest_seller());
             pstmt.setInt(8, product.getStock());
+            pstmt.setString(9, product.getCategory());
             pstmt.executeUpdate();
             return product;
         } catch (SQLException e) {
@@ -88,7 +96,8 @@ public class ProductDAO {
         return null;
     }
     public void updateProduct(Product product) {
-        String sql = "UPDATE products SET name = ?, price = ?, size = ?, description = ?, image_url = ?, best_seller = ?, stock = ? WHERE id = ?";
+        String sql = "UPDATE products SET name = ?, price = ?, size = ?, description = ?, image_url = ?, best_seller = ?, stock = ?, " +
+                    "category_id = (SELECT category_id FROM category WHERE category_id = ?) WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, product.getName());
@@ -98,7 +107,8 @@ public class ProductDAO {
             pstmt.setString(5, product.getImage_url());
             pstmt.setBoolean(6, product.getBest_seller());
             pstmt.setInt(7, product.getStock());
-            pstmt.setString(8, product.getId());
+            pstmt.setString(8, product.getCategory());
+            pstmt.setString(9, product.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
