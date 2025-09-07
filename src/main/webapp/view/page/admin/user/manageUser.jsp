@@ -69,16 +69,41 @@
                             <td class="py-3 px-6 text-left">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-4">
-                                        ${user.username.charAt(0).toUpperCase()}
+                                        <c:choose>
+                                            <c:when test="${not empty user.username}">
+                                                ${user.username}
+                                            </c:when>
+                                            <c:otherwise>
+                                                U
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                     <div>
-                                        <div class="font-medium text-gray-900">${user.username}</div>
-                                        <div class="text-gray-500 text-xs">ID: ${user.userId}</div>
+                                        <div class="font-medium text-gray-900">
+                                            <c:choose>
+                                                <c:when test="${not empty user.username}">
+                                                    ${user.username}
+                                                </c:when>
+                                                <c:otherwise>
+                                                    N/A
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                        <div class="text-gray-500 text-xs">ID: ${user.id}</div>
                                     </div>
                                 </div>
                             </td>
                             <td class="py-3 px-6 text-left">
-                                <div class="text-gray-900">${user.email}</div>
+                                <div class="text-gray-900">
+                                    <c:choose>
+                                        <c:when test="${not empty user.email}">
+                                            ${user.email}
+                                        </c:when>
+                                        <c:otherwise>
+                                            N/A
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <c:choose>
@@ -101,44 +126,51 @@
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <c:choose>
-                                    <c:when test="${user.isActive}">
+                                    <c:when test="${user.active == true}">
                                         <span class="bg-green-100 text-green-800 py-1 px-3 rounded-full text-xs font-medium">
-                                            <i class="fas fa-check-circle mr-1"></i>Hoạt động
+                                            <i class="fas fa-check-circle mr-1"></i>
                                         </span>
                                     </c:when>
                                     <c:otherwise>
                                         <span class="bg-red-100 text-red-800 py-1 px-3 rounded-full text-xs font-medium">
-                                            <i class="fas fa-times-circle mr-1"></i>Bị khóa
+                                            <i class="fas fa-times-circle mr-1"></i>
                                         </span>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <div class="text-gray-500 text-xs">
-                                    ${user.createdAt}
+                                    <c:choose>
+                                        <c:when test="${not empty user.create_at}">
+                                            ${user.create_at}
+                                        </c:when>
+                                        <c:otherwise>
+                                            N/A
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <div class="flex item-center justify-center gap-4">
-                                    <a href="/admin/manage-user/view/${user.userId}" class="text-gray-500 hover:text-blue-500 transition duration-300" title="Xem chi tiết">
+                                    <a href="/admin/manage-user/view/${user.id}" class="text-gray-500 hover:text-blue-500 transition duration-300" title="Xem chi tiết">
                                         <i class="fas fa-eye fa-lg"></i>
                                     </a>
-                                    <a href="/admin/manage-user/edit/${user.userId}" class="text-gray-500 hover:text-yellow-500 transition duration-300" title="Chỉnh sửa">
+                                    <a href="/admin/manage-user/update/${user.id}" class="text-gray-500 hover:text-yellow-500 transition duration-300" title="Chỉnh sửa">
                                         <i class="fas fa-pencil-alt fa-lg"></i>
                                     </a>
                                     <c:choose>
-                                        <c:when test="${user.isActive}">
-                                            <a href="javascript:void(0);" onclick="confirmDeactivate(${user.userId})" class="text-gray-500 hover:text-orange-500 transition duration-300" title="Khóa tài khoản">
+                                        <c:when test="${user.active == true}">
+                                            <a href="javascript:void(0);" onclick="confirmDeactivate('${user.id}')" class="text-gray-500 hover:text-orange-500 transition duration-300" title="Khóa tài khoản">
                                                 <i class="fas fa-lock fa-lg"></i>
                                             </a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="javascript:void(0);" onclick="confirmActivate(${user.userId})" class="text-gray-500 hover:text-green-500 transition duration-300" title="Mở khóa tài khoản">
+                                            <a href="javascript:void(0);" onclick="confirmActivate('${user.id}')" class="text-gray-500 hover:text-green-500 transition duration-300" title="Mở khóa tài khoản">
                                                 <i class="fas fa-unlock fa-lg"></i>
                                             </a>
                                         </c:otherwise>
                                     </c:choose>
-                                    <a href="javascript:void(0);" onclick="confirmDelete(${user.userId})" class="text-gray-500 hover:text-red-500 transition duration-300" title="Xóa">
+                                    <a href="javascript:void(0);" onclick="confirmDelete('${user.id}')" class="text-gray-500 hover:text-red-500 transition duration-300" title="Xóa">
                                         <i class="fas fa-trash-alt fa-lg"></i>
                                     </a>
                                 </div>

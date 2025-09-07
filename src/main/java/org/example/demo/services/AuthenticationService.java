@@ -5,6 +5,7 @@ import org.example.demo.models.UserModel;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 public class AuthenticationService {
     private final UserDAO userDAO;
@@ -31,7 +32,8 @@ public class AuthenticationService {
             throw new SQLException("User already exists");
         }
         // Tạo user mới
-        UserModel newUser = new UserModel(null, username, password, email, "USER");
+
+        UserModel newUser = new UserModel(UUID.randomUUID().toString(), username, password, email, "USER");
         boolean isCreated = userDAO.createUser(newUser);
         if (!isCreated) {
             throw new SQLException("Failed to create user");
@@ -43,7 +45,7 @@ public class AuthenticationService {
         return userDAO.getAllUsers();
     }
 
-    public UserModel getUserById(int userId) throws SQLException {
+    public UserModel getUserById(String userId) throws SQLException {
         return userDAO.getUserById(userId);
     }
 
@@ -71,15 +73,19 @@ public class AuthenticationService {
         return userDAO.updateUser(user);
     }
 
-    public boolean deleteUser(int userId) throws SQLException {
+    public boolean updateUserPassword(UserModel user) throws SQLException {
+        return userDAO.updateUserPassword(user);
+    }
+
+    public boolean deleteUser(String userId) throws SQLException {
         return userDAO.deleteUser(userId);
     }
 
-    public boolean activateUser(int userId) throws SQLException {
+    public boolean activateUser(String userId) throws SQLException {
         return userDAO.activateUser(userId);
     }
 
-    public boolean deactivateUser(int userId) throws SQLException {
+    public boolean deactivateUser(String userId) throws SQLException {
         return userDAO.deactivateUser(userId);
     }
 }

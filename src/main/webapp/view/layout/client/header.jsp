@@ -14,7 +14,7 @@
 
         <!-- Desktop Navigation Links -->
         <div class="hidden md:flex space-x-8 items-center font-medium text-gray-600">
-            <a href="#menu" class="hover:text-pink-500 transition duration-300">Thực đơn</a>
+            <a href="/product" class="hover:text-pink-500 transition duration-300">Thực đơn</a>
             <a href="#about" class="hover:text-pink-500 transition duration-300">Về chúng tôi</a>
             <a href="#contact" class="hover:text-pink-500 transition duration-300">Liên hệ</a>
         </div>

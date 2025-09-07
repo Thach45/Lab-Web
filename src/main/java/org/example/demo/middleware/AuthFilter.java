@@ -70,7 +70,7 @@ public class AuthFilter implements Filter {
             String role = claims.get("role", String.class);
 
             // Check quyền theo URL
-            if (path.startsWith(req.getContextPath() + "/admin") && !"admin".equals(role)) {
+            if (path.startsWith(req.getContextPath() + "/admin") && !"ADMIN".equals(role)) {
                 res.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập ADMIN");
                 return;
             }

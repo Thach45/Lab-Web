@@ -28,7 +28,7 @@ public class DeleteUserController extends HttpServlet {
                 return;
             }
             
-            int userId = Integer.parseInt(pathInfo.substring(1));
+            String userId = pathInfo.substring(1);
             
             // Xóa user
             boolean deleted = authService.deleteUser(userId);
@@ -38,8 +38,6 @@ public class DeleteUserController extends HttpServlet {
             } else {
                 resp.sendRedirect(req.getContextPath() + "/admin/manage-user?error=Failed to delete user");
             }
-        } catch (NumberFormatException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/manage-user");
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(req.getContextPath() + "/admin/manage-user?error=" + e.getMessage());

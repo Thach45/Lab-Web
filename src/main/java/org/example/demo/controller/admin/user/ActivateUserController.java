@@ -28,7 +28,7 @@ public class ActivateUserController extends HttpServlet {
                 return;
             }
             
-            int userId = Integer.parseInt(pathInfo.substring(1));
+            String userId = pathInfo.substring(1);
             
             // Kích hoạt user
             boolean activated = authService.activateUser(userId);
@@ -38,8 +38,6 @@ public class ActivateUserController extends HttpServlet {
             } else {
                 resp.sendRedirect(req.getContextPath() + "/admin/manage-user?error=Failed to activate user");
             }
-        } catch (NumberFormatException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/manage-user");
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(req.getContextPath() + "/admin/manage-user?error=" + e.getMessage());

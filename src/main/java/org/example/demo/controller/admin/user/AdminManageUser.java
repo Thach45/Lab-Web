@@ -27,8 +27,12 @@ public class AdminManageUser extends HttpServlet {
         try {
             // Lấy danh sách tất cả users
             List<UserModel> users = authService.getAllUsers();
+            if (users == null) {
+                users = List.of(); // Tránh null pointer
+            }
             req.setAttribute("users", users);
             req.setAttribute("totalUsers", users.size());
+
 
             req.getRequestDispatcher("/view/page/admin/user/manageUser.jsp").forward(req, resp);
         } catch (Exception e) {

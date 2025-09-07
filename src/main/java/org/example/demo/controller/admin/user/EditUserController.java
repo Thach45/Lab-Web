@@ -10,7 +10,7 @@ import org.example.demo.services.AuthenticationService;
 
 import java.io.IOException;
 
-@WebServlet("/admin/manage-user/edit/*")
+@WebServlet("/admin/manage-user/update/*")
 public class EditUserController extends HttpServlet {
     private AuthenticationService authService;
 
@@ -31,7 +31,7 @@ public class EditUserController extends HttpServlet {
                 return;
             }
             
-            int userId = Integer.parseInt(pathInfo.substring(1));
+            String userId = pathInfo.substring(1);
             
             // Lấy thông tin user
             UserModel user = authService.getUserById(userId);
@@ -43,8 +43,6 @@ public class EditUserController extends HttpServlet {
             
             req.setAttribute("user", user);
             req.getRequestDispatcher("/view/page/admin/user/editUser.jsp").forward(req, resp);
-        } catch (NumberFormatException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/manage-user");
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Không thể tải thông tin người dùng: " + e.getMessage());
@@ -64,7 +62,7 @@ public class EditUserController extends HttpServlet {
                 return;
             }
             
-            int userId = Integer.parseInt(pathInfo.substring(1));
+            String userId = pathInfo.substring(1);
             
             // Lấy thông tin từ form
             String username = req.getParameter("username");
@@ -126,6 +124,16 @@ public class EditUserController extends HttpServlet {
 
             // Cập nhật user trong database
             boolean updated = authService.updateUser(user);
+            
+            // Nếu có mật khẩu mới, cập nhật mật khẩu
+            if (password != null && !password.trim().isEmpty()) {
+                boolean passwordUpdated = authService.updateUserPassword(user);
+                if (!passwordUpdated) {
+                    req.setAttribute("error", "Không thể cập nhật mật khẩu");
+                    req.getRequestDispatcher("/view/page/admin/user/editUser.jsp").forward(req, resp);
+                    return;
+                }
+            }
 
             if (updated) {
                 resp.sendRedirect(req.getContextPath() + "/admin/manage-user");
@@ -133,8 +141,6 @@ public class EditUserController extends HttpServlet {
                 req.setAttribute("error", "Không thể cập nhật thông tin người dùng");
                 req.getRequestDispatcher("/view/page/admin/user/editUser.jsp").forward(req, resp);
             }
-        } catch (NumberFormatException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/manage-user");
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
