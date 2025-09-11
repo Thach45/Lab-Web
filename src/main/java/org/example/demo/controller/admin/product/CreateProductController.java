@@ -12,39 +12,38 @@ import jakarta.servlet.http.Part;
 import org.example.demo.dao.ProductDAO;
 import org.example.demo.models.Category;
 import org.example.demo.models.Product;
+import org.example.demo.models.Size;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.example.demo.services.CategoryService;
 import org.example.demo.services.ProductService;
+import org.example.demo.services.SizeService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-// 1. Khai báo URL pattern cho Servlet
 @WebServlet("/admin/manage-product/create")
-// 2. Bật tính năng xử lý multipart/form-data (bắt buộc để upload file)
 @MultipartConfig
 public class CreateProductController extends HttpServlet {
 
     private Cloudinary cloudinary;
     private ProductService productService;
     private CategoryService categoryService;
+    private SizeService sizeService;
 
-
-    // Khởi tạo Cloudinary khi Servlet được load lần đầu
     @Override
     public void init() {
-        // 3. Cấu hình Cloudinary với thông tin tài khoản của bạn
         Dotenv dotenv = Dotenv.configure().load();
         cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", dotenv.get("CLOUDINARY_CLOUD_NAME"),
                 "api_key", dotenv.get("CLOUDINARY_API_KEY"),
                 "api_secret", dotenv.get("CLOUDINARY_API_SECRET"),
                 "secure", true
-
         ));
         productService = new ProductService(new ProductDAO());
         categoryService = new CategoryService();
+        sizeService = new SizeService();
     }
 
     @Override
@@ -52,63 +51,70 @@ public class CreateProductController extends HttpServlet {
         resp.setContentType("text/html");
         List<Category> categories = categoryService.getAllCategories();
         req.setAttribute("categories", categories);
-
         req.getRequestDispatcher("/view/page/admin/product/createProduct.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Đảm bảo request được xử lý với encoding UTF-8
         request.setCharacterEncoding("UTF-8");
 
         try {
-            // 4. Lấy các thông tin từ form (text fields)
+            // Lấy thông tin cơ bản của sản phẩm
             String name = request.getParameter("name");
             String categoryId = request.getParameter("categoryId");
             double price = Double.parseDouble(request.getParameter("price"));
-            int stock = Integer.parseInt(request.getParameter("stock"));
-            String size = request.getParameter("size");
             String description = request.getParameter("description");
-            // Dùng getParameter trả về "on" nếu được check, null nếu không.
             boolean isBestSeller = request.getParameter("best_seller") != null;
 
-            // 5. Lấy file ảnh từ request
-            Part filePart = request.getPart("productImage"); // "productImage" là name của input type="file"
-
+            // Xử lý upload ảnh
+            Part filePart = request.getPart("productImage");
             String imageUrl = null;
             if (filePart != null && filePart.getSize() > 0) {
-                // 6. Upload file lên Cloudinary
-                // Chuyển file Part thành byte array để upload
                 byte[] fileBytes = filePart.getInputStream().readAllBytes();
-                // Tùy chọn upload (nếu cần)
                 Map uploadOptions = ObjectUtils.asMap("folder", "milkteashop");
-                // Gọi API để upload và nhận kết quả trả về
                 Map uploadResult = cloudinary.uploader().upload(fileBytes, uploadOptions);
-
-                // 7. Lấy URL an toàn (https) của ảnh sau khi upload thành công
                 imageUrl = (String) uploadResult.get("secure_url");
             } else {
-                // Xử lý trường hợp người dùng không upload ảnh (nếu cho phép)
-                // Ví dụ: gán một ảnh mặc định
                 imageUrl = "https://res.cloudinary.com/drblblupt/image/upload/v1756445107/ssq0tpsl7zx3bhlrx44a.png";
             }
 
-            Product newProduct = new Product(name, price, size, description, imageUrl, isBestSeller,stock, categoryId );
+            // Xử lý thông tin size
+            List<Size> sizes = new ArrayList<>();
+            int totalStock = 0;
+            int i = 0;
+            while (request.getParameter("sizes[" + i + "].name") != null) {
+                String sizeName = request.getParameter("sizes[" + i + "].name");
+                int sizeStock = Integer.parseInt(request.getParameter("sizes[" + i + "].stock"));
+                
+                Size size = new Size();
+                size.setName(sizeName);
+                size.setStock(sizeStock);
+                sizes.add(size);
+                
+                totalStock += sizeStock;
+                i++;
+            }
 
+            // Tạo sản phẩm với tổng số lượng từ các size
+            Product newProduct = new Product(name, price, "", description, imageUrl, isBestSeller, totalStock, categoryId);
+            Product createdProduct = productService.createProduct(newProduct);
 
-            Product product = productService.createProduct(newProduct);
+            // Tạo các size cho sản phẩm
+            for (Size size : sizes) {
+                size.setProductId(createdProduct.getId());
+                sizeService.createSize(size);
+            }
+
             System.out.println("Thêm sản phẩm thành công!");
             System.out.println("Tên: " + name);
             System.out.println("URL ảnh: " + imageUrl);
+            System.out.println("Tổng số lượng: " + totalStock);
 
-            // 9. Chuyển hướng người dùng về trang danh sách sản phẩm
-             response.sendRedirect("/home");
+            response.sendRedirect("/admin/manage-product");
 
         } catch (Exception e) {
-            // Xử lý lỗi (ví dụ: log lỗi, hiển thị trang lỗi)
             e.printStackTrace();
-//            request.setAttribute("errorMessage", "Đã xảy ra lỗi trong quá trình thêm sản phẩm.");
-//            request.getRequestDispatcher("/views/admin/error.jsp").forward(request, response);
+            response.sendRedirect("/admin/manage-product");
         }
     }
 }

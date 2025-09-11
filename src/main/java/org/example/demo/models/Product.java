@@ -13,6 +13,17 @@ public class Product {
     private Boolean best_seller;
     private int stock;
 
+    public Product(String id, String name, double price, String description, String imageUrl, boolean isBestSeller, int totalStock, String category) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.image_url = imageUrl;
+        this.best_seller = isBestSeller;
+        this.category = category;
+        this.stock = totalStock;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -42,12 +53,15 @@ public class Product {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.size = size;
         this.description = description;
         this.image_url = image_url;
         this.best_seller = best_seller;
         this.stock = stock;
         this.category = category;
+    }
+    public Product( String id,String name, double price, String size, String description, String image_url, Boolean best_seller , String category) {
+
+
     }
     public Product( String name, double price, String size, String description, String image_url, Boolean best_seller, int stock, String category) {
 
@@ -62,6 +76,7 @@ public class Product {
         this.category = category;
 
     }
+
 
     public String getSize() {
         return size;
